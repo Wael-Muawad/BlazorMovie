@@ -1,0 +1,18 @@
+﻿@page "/movie3/{Id:int}"
+@inject TMDBClientService clientService
+
+
+<Details movieDetails="@movieDetails" />
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    MovieDetails? movieDetails;
+
+    protected override async Task OnInitializedAsync()
+    {
+        movieDetails = await clientService.GetMovieById(Id);
+    }
+}

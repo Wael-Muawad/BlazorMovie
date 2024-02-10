@@ -1,0 +1,21 @@
+﻿<div class="container-xxl">
+    <div class="overview d-flex flex-column">
+        <p>@OverView</p>
+
+        @if (SpokenLanguages.Any())
+        {
+            <div>
+                Languages: @string.Join(", ", SpokenLanguages.Select(sl => sl.EnglishName))
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public string? OverView { get; set; }
+
+    [Parameter]
+    public IEnumerable<SpokenLanguages> SpokenLanguages { get; set; } = [];
+}

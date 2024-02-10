@@ -1,0 +1,18 @@
+﻿<div class="order-last order-md-first d-flex justify-content-center">
+    <div class="poster-container">
+        @if (string.IsNullOrEmpty(PosterPath))
+        {
+            <img src="/images/PosterPlaceHolder.png" alt="Movie Poster" />
+        }
+        else
+        {
+            <img src="@($"https://image.tmdb.org/t/p/w500/{PosterPath}")" alt="Movie Poster" />
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public string? PosterPath { get; set; }
+}

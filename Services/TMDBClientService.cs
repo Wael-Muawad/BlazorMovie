@@ -23,24 +23,31 @@ namespace BlazorMovie.Services
         }
 
 
-        public async Task<PopularMoviePagedResponse> GetPopularMovies()
+        public async Task<PopularMoviePagedResponse?> GetPopularMovies()
         {
             try
             {
-                var result = await _httpClient.GetFromJsonAsync<PopularMoviePagedResponse>("movie/popular");
+                return await _httpClient.GetFromJsonAsync<PopularMoviePagedResponse>("movie/popular");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }    
+        }
 
-                return result;
+        public async Task<MovieDetails?> GetMovieById(int id)
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<MovieDetails>($"movie/{id}");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
-        
-        
         }
-
-
 
     }
 }

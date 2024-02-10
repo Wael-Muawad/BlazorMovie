@@ -1,7 +1,5 @@
 ﻿@page "/popularmovies"
-@using BlazorMovie.UI
 @inject TMDBClientService clientService
-@* @attribute [StreamRendering(true)] *@
 
 
 <PageTitle>Blazor Movie: Popular Movies</PageTitle>
@@ -54,7 +52,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(TimeSpan.FromSeconds(5));
+        //await Task.Delay(TimeSpan.FromSeconds(5));
         Movies = await clientService.GetPopularMovies();
     }
 }

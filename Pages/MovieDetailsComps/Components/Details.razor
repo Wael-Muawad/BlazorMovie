@@ -1,0 +1,52 @@
+﻿@if (movieDetails is null)
+{
+    <p><em>Loading the movie...</em></p>
+}
+else
+{
+    <PageTitle>@movieDetails.Title</PageTitle>
+
+
+    <!--Page Banner-->
+    <div class="hero-bg" style="@($"--bg-img: url(https://image.tmdb.org/t/p/original/{movieDetails.BackdropPath})")">
+
+        <div class="hero-container">
+            <div class="container-xxl d-flex flex-column flex-md-row">
+
+                <!--title content goes here-->
+                <div class="flex-grow-1 d-flex align-items-center justify-content-center justify-content-md-end">
+                    <div class="title-container text-center text-md-end">
+
+                        <MovieTitles Title="movieDetails.Title"
+                                     Tagline="movieDetails.Tagline" />
+
+
+                        <MovieInfo ReleaseDate="movieDetails.ReleaseDate"
+                                   RunTime="movieDetails.Runtime"
+                                   VoteAverage="movieDetails.VoteAverage" />
+
+
+                        <MovieLinks HomePage="movieDetails.Homepage"
+                                    IMDP_ID="movieDetails.ImdbId" />
+                    </div>
+                </div>
+
+
+                <MoviePoster PosterPath="@movieDetails.PosterPath" />
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <MovieOverview OverView="@movieDetails.Overview"
+                   SpokenLanguages="@movieDetails.SpokenLanguages" />
+}
+
+
+@code {
+    [Parameter]
+    public MovieDetails? movieDetails { get; set; }
+}

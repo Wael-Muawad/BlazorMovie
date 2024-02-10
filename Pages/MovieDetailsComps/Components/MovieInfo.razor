@@ -1,0 +1,24 @@
+﻿@if (DateTime.TryParse(ReleaseDate, out DateTime releaseDate))
+{
+    <span class="badge me-2 text-bg-light">@releaseDate.ToString("MMM dd yyy")</span>
+}
+@{
+    var runtime = $"{RunTime / 60}h {RunTime % 60}m";
+    var rating = (VoteAverage * 10).ToString("F1");
+}
+<span class="badge me-2 text-bg-dark">@runtime</span>
+<span class="badge me-2 text-bg-success">@rating% <i class="bi bi-stars"></i></span>
+
+
+@code {
+    [Parameter]
+    public int RunTime { get; set; }
+
+    [Parameter]
+    public string? ReleaseDate { get; set; }
+    
+    [Parameter]
+    public double VoteAverage { get; set; }
+
+
+}

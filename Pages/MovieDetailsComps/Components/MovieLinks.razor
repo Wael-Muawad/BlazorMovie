@@ -1,0 +1,29 @@
+﻿<div class="movie-links">
+    <div class="d-flex justify-content-center justify-content-md-end p-3">
+        @if (!string.IsNullOrEmpty(HomePage))
+        {
+            <div class="text-center px-2">
+                <a href="@HomePage" target="_blank" class="btn btn-outline-light rounded-pill">
+                    Website
+                </a>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(IMDP_ID))
+        {
+            <div class="text-center px-2">
+                <a href="@($"https://www.imdb.com/title/{IMDP_ID}")" target="_blank" class="btn btn-outline-warning rounded-pill">
+                    IMDB
+                </a>
+            </div>
+        })
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public string? HomePage { get; set; }
+
+    [Parameter]
+    public string? IMDP_ID { get; set; }
+}
