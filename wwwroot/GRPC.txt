@@ -1,0 +1,64 @@
+GRPC
+
+HTTP2:
+1- The new basic unit of communication in HTTP/2 and replace the familiar header & body format of current HTTP requests/responses is called frames.
+2- Binary protocol
+3- Uses Protocol buffers as format 
+4- 
+
+FrameTypes:
+0x00		DATA	
+0x01		HEADERS	
+0x02		PRIORITY	
+0x03		RST_STREAM	
+0x04		SETTINGS	
+0x05		PUSH_PROMISE	
+0x06		PING	
+0x07		GOAWAY	
+0x08		WINDOW_UPDATE	
+0x09		CONTINUATION	
+0x0a		ALTSVC	
+0x0b		Unassigned	
+0x0c		ORIGIN	
+0x0d-0x0f	Unassigned	
+0x10		PRIORITY_UPDATE	
+0x11-0xff	Unassigned
+
+
+
+1- head of line bloking issue at transport layer 
+
+
+cons:
+1-Timeouts  => pub/sub
+2-Error Handling
+
+
+frontend approaches:
+1- gRPC-Web  => JavaScript library  (It works by translating gRPC requests into HTTP/1.1 requests that are compatible with web browsers.)
+2- Proxy Server to translate between HTTP and gRPC  =>  Envoy Proxy (can act as sidecar and API gateway) (data plane component in service mesh)
+3- gRPC Gateway
+4- 
+
+
+
+-Service Mesh
+VS
+-API Gateway
+
+
+-Service Mesh has two main components:
+1- data plane
+2- control plane
+
+sidecar 
+
+
+What Is the Difference Between HTTP/2 and HTTP/1
+https://www.thewebmaster.com/what-is-http2-and-how-does-it-compare-to-http1-1/#:~:text=HTTP1.,0s)%20to%20complete%20HTTP%20requests.
+
+Service Mesh vs API Gateway
+https://medium.com/microservices-in-practice/service-mesh-vs-api-gateway-a6d814b9bf56
+
+api gateway 
+https://tetrate.io/api-gateway/
