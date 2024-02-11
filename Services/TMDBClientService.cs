@@ -23,11 +23,14 @@ namespace BlazorMovie.Services
         }
 
 
-        public async Task<PopularMoviePagedResponse?> GetPopularMovies()
+        public async Task<PopularMoviePagedResponse?> GetPopularMovies(int pageNum = 1)
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<PopularMoviePagedResponse>("movie/popular");
+                if (pageNum < 1) pageNum = 1;
+                else if (pageNum > 500) pageNum = 500;
+
+                return await _httpClient.GetFromJsonAsync<PopularMoviePagedResponse>($"movie/popular?page{pageNum}");
             }
             catch (Exception ex)
             {

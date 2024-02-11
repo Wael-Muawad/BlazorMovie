@@ -1,6 +1,6 @@
 ﻿@page "/popularmovies"
 @inject TMDBClientService clientService
-
+@inject NavigationManager NavManager
 
 <PageTitle>Blazor Movie: Popular Movies</PageTitle>
 
@@ -22,12 +22,12 @@
         <div class="row row-cols-2 row-cols-lg-4 row-cols-xl-5 g-3 justify-content-center justify-content-md-start">
             @if (Movies is not null)
             {
-                    @foreach (var movie in Movies.Results)
-                    {
-                        <div class="col">
-                            <MovieCard Movie="movie" />
-                        </div>
-                    }
+                @foreach (var movie in Movies.Results)
+                {
+                    <div class="col">
+                        <MovieCard Movie="movie" />
+                    </div>
+                }
             }
             else
             {
@@ -40,8 +40,16 @@
             }
         </div>
 
-
     </div>
+
+
+    @if (Movies?.TotalPages > 1)
+    {
+        <Paginator CurrentPage="Movies.Page"
+                   TotalPages="Movies.TotalPages > 500 ? 500 : Movies.TotalPages"
+                   OnPageChange="GetPage" />
+    }
+
 </div>
 
 
@@ -50,9 +58,26 @@
 
     PopularMoviePagedResponse? Movies { get; set; }
 
+    [SupplyParameterFromQuery(Name = "page")]
+    public int PageNum { get; set; } = 1;
+
     protected override async Task OnInitializedAsync()
     {
         //await Task.Delay(TimeSpan.FromSeconds(5));
         Movies = await clientService.GetPopularMovies();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (PageNum < 1) PageNum = 1;
+        else if (PageNum > 500) PageNum = 500;
+
+        Movies = await clientService.GetPopularMovies(PageNum);
+    }
+
+    private void GetPage(int pageNum)
+    {
+        string newUrl = NavManager.GetUriWithQueryParameter("page", pageNum);
+        NavManager.NavigateTo(newUrl);
     }
 }
