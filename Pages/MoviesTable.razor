@@ -1,0 +1,92 @@
+﻿@page "/moviestables"
+@inject TMDBClientService clientService
+
+
+
+<PageTitle>Movies Table</PageTitle>
+<h3 class="m-5">Movies Table</h3>
+
+@if (Movies is not null)
+{
+    <div class="grid m-5">
+        <QuickGrid Items="@FilteredMovies" Pagination="@pagination">
+            <TemplateColumn Title="Postar">
+                <img src="@($"https://image.tmdb.org/t/p/w500/{context.PosterPath}")" width="100" height="150" />
+            </TemplateColumn>
+            <PropertyColumn Property="@(c => c.Title)" Sortable="true" Class="country-name">
+                <ColumnOptions>
+                    <div class="search-box">
+                        <input type="search" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Movie name..." />
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+            <PropertyColumn Property="@(c => DateTime.Parse(c.ReleaseDate).ToString("MMMM dd, yyyy"))" Sortable="true" Align="Align.Right" Title="Release Date" />
+            <PropertyColumn Property="@(c => c.Popularity)" Sortable="true" Align="Align.Right" />
+            <TemplateColumn Title="Details">
+                <div>
+                    <a class="btn btn-primary" href="/movie/@context.Id">Details</a>
+                </div>
+            </TemplateColumn>
+        </QuickGrid>
+    </div>
+
+    <div class="m-5">
+        <Paginator State="@pagination" />
+    </div>
+}
+else
+{
+    <div class="grid m-5">
+        <QuickGrid Items="@FilteredMovies" Pagination="@pagination">
+            <TemplateColumn Title="Postar">
+                <img src="@($"https://image.tmdb.org/t/p/w500/{context.PosterPath}")" width="100" height="150" />
+            </TemplateColumn>
+            <PropertyColumn Property="@(c => c.Title)" Sortable="true" Class="country-name">
+                <ColumnOptions>
+                    <div class="search-box">
+                        <input type="search" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Movie name..." />
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+            <PropertyColumn Property="@(c => DateTime.Parse(c.ReleaseDate).ToString("MMMM dd, yyyy"))" Sortable="true" Align="Align.Right" Title="Release Date" />
+            <PropertyColumn Property="@(c => c.Popularity)" Sortable="true" Align="Align.Right" />
+            <TemplateColumn Title="Details">
+                <div>
+                    <a class="btn btn-primary" href="/movie/@context.Id">Details</a>
+                </div>
+            </TemplateColumn>
+        </QuickGrid>
+    </div>
+    <div class="m-5">
+        <Paginator State="@pagination" />
+    </div>
+}
+
+
+
+@code {
+    public PopularMoviePagedResponse? Movies { get; set; }
+    PaginationState pagination = new PaginationState { ItemsPerPage = 5 };
+    string nameFilter = string.Empty;
+
+    IQueryable<PopularMovie> FilteredMovies
+    {
+        get
+        {
+            var result = Movies?.Results;
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                result = result?.Where(c => c.Title.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
+            }
+
+            return result?.AsQueryable();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // await Task.Delay(TimeSpan.FromMinutes(5));
+        Movies = await clientService.GetPopularMovies();
+    }
+}

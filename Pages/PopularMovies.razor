@@ -45,7 +45,7 @@
 
     @if (Movies?.TotalPages > 1)
     {
-        <Paginator CurrentPage="Movies.Page"
+        <PaginatorUI CurrentPage="Movies.Page"
                    TotalPages="Movies.TotalPages > 500 ? 500 : Movies.TotalPages"
                    OnPageChange="GetPage" />
     }
