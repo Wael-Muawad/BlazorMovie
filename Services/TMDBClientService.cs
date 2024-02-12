@@ -30,7 +30,7 @@ namespace BlazorMovie.Services
                 if (pageNum < 1) pageNum = 1;
                 else if (pageNum > 500) pageNum = 500;
 
-                return await _httpClient.GetFromJsonAsync<PopularMoviePagedResponse>($"movie/popular?page{pageNum}");
+                return await _httpClient.GetFromJsonAsync<PopularMoviePagedResponse>($"movie/popular?page={pageNum}");
             }
             catch (Exception ex)
             {
